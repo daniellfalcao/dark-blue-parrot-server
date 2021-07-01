@@ -51,6 +51,11 @@ dependencies {
     implementation 'io.github.cdimascio:dotenv-kotlin:6.2.2'
 }
 
+task runServer(type: JavaExec) {
+    main = 'com.github.daniellfalcao.parrot.server.ParrotServerKt'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
 // if you have source imports issues, add the below
 sourceSets.main.java.srcDir new File(buildDir, 'generated/source')
 idea {
