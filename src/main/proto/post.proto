@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package post;
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option java_package = "com.proto.parrot.service.post";
+option java_multiple_files = true;
+
+message Author {
+  string id = 1;
+  string username = 2;
+}
+
+message Post {
+  string id = 1;
+  Author author = 2;
+  string message = 3;
+  bool like = 4;
+  uint32 likes = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message PostsRequest {
+  string last_post_id = 1;
+}
+
+message PostsResponse {
+  repeated Post posts = 1;
+  uint32 postsMaxSize = 2;
+  uint32 postsSize = 3;
+}
+
+message PostRequest {
+  string post_id = 2;
+}
+
+message PostResponse {
+  Post post = 1;
+}
+
+message CreatePostRequest {
+  string message = 2;
+}
+
+message EditPostRequest {
+  string post_id = 1;
+  string message = 2;
+}
+
+service PostService {
+  rpc CreatePost(CreatePostRequest) returns (PostResponse) {};
+  rpc GetPost(PostRequest) returns (PostResponse) {};
+  rpc GetPosts(PostsRequest) returns (PostsResponse) {};
+  rpc GetMyPosts(PostsRequest) returns (PostsResponse) {};
+  rpc GetPostStream(PostRequest) returns (stream PostResponse) {};
+  rpc EditPost(EditPostRequest) returns (PostResponse) {};
+  rpc DeletePost(PostRequest) returns (google.protobuf.Empty) {};
+  rpc SwapLikePost(PostRequest) returns (PostResponse) {};
+}

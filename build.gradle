@@ -1,0 +1,61 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.5.10'
+    id "com.google.protobuf" version "0.8.13"
+}
+
+apply plugin: 'idea'
+
+group 'com.github.daniellfalcao'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.17.3"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:1.38.1"
+        }
+//        grpckt {
+//            artifact = "io.grpc:protoc-gen-grpc-kotlin:1.1.0:jdk7@jar"
+//        }
+    }
+    generateProtoTasks {
+        ofSourceSet("main").forEach {
+            it.plugins {
+                grpc
+//                grpckt
+            }
+        }
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    implementation("io.grpc:grpc-kotlin-stub:1.1.0")
+    implementation("io.grpc:grpc-protobuf:1.38.1")
+    implementation("io.grpc:grpc-netty-shaded:1.38.0")
+
+    implementation("org.mongodb:mongodb-driver-sync:4.2.3")
+    implementation("org.slf4j:slf4j-api:1.8.0-beta4")
+    implementation("org.slf4j:slf4j-simple:1.8.0-beta4")
+
+    implementation 'com.auth0:java-jwt:3.17.0'
+
+    implementation 'io.github.cdimascio:dotenv-kotlin:6.2.2'
+}
+
+// if you have source imports issues, add the below
+sourceSets.main.java.srcDir new File(buildDir, 'generated/source')
+idea {
+    module {
+        // Marks the already(!) added srcDir as "generated"
+        generatedSourceDirs += file('build/generated/source')
+    }
+}

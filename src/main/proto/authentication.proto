@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package authentication;
+
+import "google/protobuf/empty.proto";
+
+option java_package = "com.proto.parrot.service.authentication";
+option java_multiple_files = true;
+
+message User {
+  string id = 1;
+  string username = 2;
+  string birthday = 3;
+}
+
+message SignInRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message SignInResponse {
+  string token = 1;
+  User user = 2;
+}
+
+service AuthenticationService {
+  rpc SignIn(SignInRequest) returns (SignInResponse) {};
+  rpc SignOut(google.protobuf.Empty) returns (google.protobuf.Empty) {};
+}

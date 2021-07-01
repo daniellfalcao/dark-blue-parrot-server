@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package authentication;
+
+import "google/protobuf/empty.proto";
+
+option java_package = "com.proto.parrot.service.authentication";
+option java_multiple_files = true;
+
+message SignUpRequest {
+  string username = 1;
+  string password = 2;
+  string birthday = 3;
+}
+
+message CheckUsernameAvailabilityRequest {
+  string username = 1;
+}
+
+message CheckUsernameAvailabilityResponse {
+  bool is_available = 1;
+}
+
+service RegisterService {
+  rpc SignUp(SignUpRequest) returns (google.protobuf.Empty) {};
+  rpc CheckUsernameAvailability(CheckUsernameAvailabilityRequest) returns (CheckUsernameAvailabilityResponse) {};
+}
