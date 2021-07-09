@@ -11,6 +11,7 @@ message SignUpRequest {
   string username = 1;
   string password = 2;
   string birthday = 3;
+  string parrot = 4;
 }
 
 message CheckUsernameAvailabilityRequest {

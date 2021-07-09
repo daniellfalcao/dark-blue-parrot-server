@@ -211,6 +211,7 @@ class PostDAO(database: MongoDatabase) {
     private fun Document.toAuthor() = Author.newBuilder()
         .setId(getObjectId(UserDAO.FIELD_ID).toString())
         .setUsername(getString(UserDAO.FIELD_USERNAME))
+        .setParrot(getString(UserDAO.FIELD_PARROT))
         .build()
 
     private fun Document.isLiked(currentUserObjectId: ObjectId): Boolean {

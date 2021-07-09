@@ -12,6 +12,7 @@ option java_multiple_files = true;
 message Author {
   string id = 1;
   string username = 2;
+  string parrot = 3;
 }
 
 message Post {

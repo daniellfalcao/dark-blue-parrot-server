@@ -19,6 +19,7 @@ class UserDAO(database: MongoDatabase) {
         const val FIELD_USERNAME = "username"
         const val FIELD_BIRTHDAY = "birthday"
         const val FIELD_PASSWORD = "password"
+        const val FIELD_PARROT = "parrot"
     }
 
     private val userCollection = database.getCollection(COLLECTION_USER)
@@ -29,7 +30,12 @@ class UserDAO(database: MongoDatabase) {
 
     // TODO: encrypt password before save in mongo
     @Throws(UserAlreadyExistsException::class)
-    fun createUser(username: String, password: String, birthday: String): User {
+    fun createUser(
+        username: String,
+        password: String,
+        birthday: String,
+        parrot: String
+    ): User {
         userCollection.find(eq(FIELD_USERNAME, username)).first()?.let {
             throw UserAlreadyExistsException()
         }
@@ -37,6 +43,7 @@ class UserDAO(database: MongoDatabase) {
             append(FIELD_USERNAME, username)
             append(FIELD_BIRTHDAY, birthday)
             append(FIELD_PASSWORD, password)
+            append(FIELD_PARROT, parrot)
         }.also {
             userCollection.insertOne(it)
         }.toUser()
@@ -78,6 +85,7 @@ class UserDAO(database: MongoDatabase) {
         .setId(getObjectId(FIELD_ID).toString())
         .setUsername(getString(FIELD_USERNAME))
         .setBirthday(getString(FIELD_BIRTHDAY))
+        .setParrot(getString(FIELD_PARROT))
         .build()
 
     // endregion

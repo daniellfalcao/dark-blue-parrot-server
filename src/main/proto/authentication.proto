@@ -11,6 +11,7 @@ message User {
   string id = 1;
   string username = 2;
   string birthday = 3;
+  string parrot = 4;
 }
 
 message SignInRequest {

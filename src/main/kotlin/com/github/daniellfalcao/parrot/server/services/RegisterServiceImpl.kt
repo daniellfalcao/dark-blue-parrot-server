@@ -17,7 +17,7 @@ class RegisterServiceImpl(private val userDAO: UserDAO) : RegisterServiceGrpc.Re
         responseObserver: StreamObserver<Empty>
     ) {
         try {
-            userDAO.createUser(request.username, request.password, request.birthday)
+            userDAO.createUser(request.username, request.password, request.birthday, request.parrot)
             responseObserver.onNext(Empty.getDefaultInstance())
             responseObserver.onCompleted()
         } catch (error: StatusRuntimeException) {
